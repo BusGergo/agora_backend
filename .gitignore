@@ -1,0 +1,65 @@
+## Build results
+bin/
+obj/
+out/
+build/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## OS-specific files
+.DS_Store
+Thumbs.db
+
+## Rider (JetBrains) IDE
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.vscode/
+
+## .NET secrets & config
+secrets.json
+appsettings.Development.json
+
+## Entity Framework Migrations snapshots (optional)
+*Migrations/*Snapshot.cs
+
+## SQLite Database
+*.db
+
+## Logs
+*.log
+logs/
+
+## Publish artifacts
+publish/
+*.publish.xml
+
+## Test results
+TestResults/
+*.coverage
+*.coveragexml
+
+## NCrunch
+_NCrunch_*
+*.ncrunch*
+
+## Resharper
+_ReSharper*/
+*.DotSettings.user
+
+## NuGet
+*.nupkg
+.nuget/
+packages/
+project.lock.json
+project.fragment.lock.json
+
+## Others
+*.bak
+*.tmp
+*.swp

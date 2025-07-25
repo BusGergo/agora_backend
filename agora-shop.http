@@ -1,0 +1,6 @@
+@agora_shop_HostAddress = http://localhost:5177
+
+GET {{agora_shop_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
