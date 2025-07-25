@@ -1,4 +1,5 @@
 using agora_shop.Models;
+using agora_shop.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 namespace agora_shop.Controllers;
 
@@ -6,6 +7,13 @@ namespace agora_shop.Controllers;
 [Route("api/products")]
 public class ProductsController : ControllerBase
 {
+    IProductsService _productsService;
+
+    public ProductsController(IProductsService productsService)
+    {
+        _productsService = productsService;
+    }
+    
     [HttpGet]
     public IActionResult GetAllProducts()
     {
