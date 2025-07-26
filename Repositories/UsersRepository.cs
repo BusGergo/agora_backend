@@ -7,7 +7,7 @@ namespace agora_shop.Repositories;
 public class UsersRepository :  IUsersRepository
 {
     private readonly AppDbContext _context;
-
+    
     public UsersRepository(AppDbContext context)
     {
         _context = context;
@@ -21,5 +21,10 @@ public class UsersRepository :  IUsersRepository
     public User? GetUserByPhoneNumber(string targetPhoneNumber)
     {
         return _context.Users.FirstOrDefault(u => u.PhoneNumber == targetPhoneNumber);
+    }
+
+    public void CreateUser(User user)
+    {
+        _context.Users.Add(user);
     }
 }

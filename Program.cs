@@ -2,6 +2,8 @@ using System.Text;
 using agora_shop.Data;
 using agora_shop.Repositories;
 using agora_shop.Repositories.IRepositories;
+using agora_shop.Services;
+using agora_shop.Services.IServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -37,9 +39,14 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
 
+builder.Services.AddScoped<IUsersService,  UsersService>();
+builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapControllers();
 
 if (app.Environment.IsDevelopment())
 {

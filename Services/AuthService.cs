@@ -25,12 +25,12 @@ public class AuthService : IAuthService
     {
         var user = _usersRepository.GetUserByEmail(dto.Email);
         if (user == null)
-            throw new Exception("User not found");
+            return ServiceResult<string>.Failure("User not found");
 
         var hasher = new PasswordHasher<User>();
         var result = hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
         if (result == PasswordVerificationResult.Failed)
-            throw new Exception("Invalid email or password");
+            return ServiceResult<string>.Failure("Invalid password");
 
         var token = JwtTokenGenerator.GenerateJwtToken(user, _config);
         return ServiceResult<string>.Ok(token);
@@ -40,12 +40,12 @@ public class AuthService : IAuthService
     {
         var user = _usersRepository.GetUserByPhoneNumber(dto.PhoneNumber);
         if (user == null)
-            throw new Exception("User not found");
+            return ServiceResult<string>.Failure("User not found");
         
         var hasher = new PasswordHasher<User>();
         var result = hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
         if (result == PasswordVerificationResult.Failed)
-            throw new Exception("Invalid phone or password");
+            return ServiceResult<string>.Failure("Invalid password");
         
         var token = JwtTokenGenerator.GenerateJwtToken(user, _config);
         return ServiceResult<string>.Ok(token);
@@ -53,7 +53,22 @@ public class AuthService : IAuthService
 
     public ServiceResult<string> RegisterUser(UserRegisterDTO dto)
     {
-        return new ServiceResult<string>();
-        //TODO: Implement registration logic
+        if(dto.Password != dto.ConfirmPassword)
+            return ServiceResult<string>.Failure("Passwords do not match");
+        
+        var hasher = new PasswordHasher<User>();
+        var newUser = new User
+        {
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Email = dto.Email,
+            PasswordHash = hasher.HashPassword(null, dto.Password),
+            PhoneNumber = dto.PhoneNumber,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+        
+        _usersRepository.CreateUser(newUser);
+        return ServiceResult<string>.Ok("User created");
     }
 }
